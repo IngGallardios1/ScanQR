@@ -1,13 +1,12 @@
 {
-  "name": "api",
+  "name": "webservice",
   "version": "1.0.0",
-  "description": "API REST Qr code",
+  "description": "web service de scan qr",
   "keywords": [
-    "api",
-    "rest"
+    "api"
   ],
   "license": "ISC",
-  "author": "jgallardo",
+  "author": "Juan Carlos Gallardo",
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
