@@ -9,6 +9,8 @@ import { connectdb, Database } from '../src/database';
 
 import { ScannedCode } from '../src/models';
 
+import { create, getAll } from '../src/webservice';
+
 
 export default () => {
     const [location, setLocation] = useState<Location.LocationObject | null>(null);
@@ -25,11 +27,8 @@ export default () => {
             Alert.alert(result.data);
         }
 
-        // Agregar nuevo código escaneado
-        const db = await connectdb();
-        await db.insertarCodigo(result.data, result.type);
-
-        setScannedCodes(await db.consultarCodigos());
+        create({ data: result.data, type: result.type });
+        setScannedCodes(await getAll());
 
     };
 
@@ -67,11 +66,14 @@ export default () => {
     useEffect( () => {
       if (!db) return;
 
-      db.consultarCodigos().then((codigos) => setScannedCodes(codigos));
+      (async () => {
+        setScannedCodes(await getAll());
+      })();
 
       return () => {
-        db?.close();
+        db.close();
       }
+
     }, [db]);
 
     if (!permission) {
